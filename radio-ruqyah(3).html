@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Radio Ruqyah — Spiritual Healing</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════
+   RESET & TOKENS
+═══════════════════════════════════════ */
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --g:#1D9E75;--gd:#0F6E56;--gb:rgba(29,158,117,0.14);
+  --bg:#050c08;--bg2:#07100a;--bg3:#0c1810;
+  --t:#f5f2eb;--td:rgba(245,242,235,0.58);--tf:rgba(245,242,235,0.25);
+  --br:rgba(255,255,255,0.08);
+  --serif:'Cormorant Garamond',serif;
+  --sans:'Jost',sans-serif;
+  --display:'Amiri',serif;
+  --r:clamp(14px,4vw,18px);
+}
+html{scroll-behavior:smooth;}
+html,body{height:100%;}
+body{font-family:var(--sans);background:var(--bg);color:var(--t);font-weight:300;font-size:var(--r);overflow:hidden;}
+
+/* hide cursor on touch, show on desktop */
+@media(hover:hover){body{cursor:none;}}
+#cur,#ring{display:none;}
+@media(hover:hover){#cur,#ring{display:block;}}
+#cur{position:fixed;width:9px;height:9px;background:var(--g);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:9999;transition:transform 0.08s;}
+#ring{position:fixed;width:38px;height:38px;border:1px solid rgba(29,158,117,0.55);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:9998;transition:border-color 0.2s,transform 0.18s;}
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:600;display:flex;align-items:center;justify-content:space-between;padding:clamp(14px,3vw,24px) clamp(16px,5vw,52px);background:linear-gradient(to bottom,rgba(5,12,8,0.97),transparent);}
+.logo{font-family:var(--display);font-size:clamp(20px,4vw,28px);letter-spacing:0.02em;}
+.logo span{color:var(--g);}
+.nav-links{display:flex;gap:clamp(16px,3vw,36px);}
+.nav-links a{font-family:var(--sans);font-size:clamp(11px,1.4vw,13px);font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--td);text-decoration:none;cursor:pointer;transition:color 0.2s;}
+.nav-links a:hover{color:var(--t);}
+@media(max-width:600px){.nav-links{display:none;}}
+.nav-cta{padding:clamp(8px,1.5vw,11px) clamp(14px,2.5vw,26px);background:transparent;color:var(--g);border:1px solid var(--g);font-size:clamp(10px,1.3vw,12px);font-weight:400;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:background 0.2s,color 0.2s;white-space:nowrap;}
+.nav-cta:hover{background:var(--g);color:#fff;}
+
+/* ═══════════════════════════════════════
+   DOT NAV
+═══════════════════════════════════════ */
+.dot-nav{position:fixed;right:clamp(12px,2vw,32px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:500;}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.18);cursor:pointer;border:none;padding:0;transition:all 0.35s;}
+.dot.active{background:var(--g);transform:scale(1.8);}
+@media(max-width:480px){.dot-nav{right:8px;}.dot{width:4px;height:4px;}}
+
+/* ═══════════════════════════════════════
+   SCROLLER + SECTIONS
+═══════════════════════════════════════ */
+.scroller{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;}
+.scroller::-webkit-scrollbar{display:none;}
+section{height:100vh;width:100%;scroll-snap-align:start;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+
+/* ═══════════════════════════════════════
+   SHARED
+═══════════════════════════════════════ */
+.btn-p{padding:clamp(12px,2vw,16px) clamp(24px,4vw,42px);background:var(--g);color:#fff;border:none;font-size:clamp(11px,1.4vw,13px);font-weight:400;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:background 0.2s,transform 0.1s;}
+.btn-p:hover{background:var(--gd);}
+.btn-p:active{transform:scale(0.97);}
+.btn-g{padding:clamp(12px,2vw,16px) clamp(24px,4vw,42px);background:transparent;color:var(--t);border:1px solid rgba(255,255,255,0.22);font-size:clamp(11px,1.4vw,13px);font-weight:400;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:border-color 0.2s;}
+.btn-g:hover{border-color:rgba(255,255,255,0.6);}
+.sec-label{font-family:var(--sans);font-size:clamp(10px,1.3vw,11px);font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:var(--g);margin-bottom:clamp(10px,2vw,16px);}
+.sec-title{font-family:var(--serif);font-size:clamp(28px,5vw,58px);line-height:1.1;font-weight:300;}
+
+/* ═══════════════════════════════════════
+   REGISTRATION POPUP
+═══════════════════════════════════════ */
+.popup-overlay{position:fixed;inset:0;background:rgba(5,12,8,0.88);z-index:800;display:none;align-items:center;justify-content:center;padding:clamp(16px,4vw,40px);backdrop-filter:blur(8px);}
+.popup-overlay.open{display:flex;}
+.popup{background:#0a1610;border:0.5px solid rgba(29,158,117,0.3);width:100%;max-width:480px;padding:clamp(24px,5vw,44px);position:relative;animation:popIn 0.35s ease;}
+@keyframes popIn{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.popup-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--td);font-size:22px;cursor:pointer;font-family:var(--sans);line-height:1;}
+.popup-close:hover{color:var(--t);}
+.popup-steps{display:flex;gap:6px;margin-bottom:28px;}
+.pstep{height:2px;flex:1;background:rgba(255,255,255,0.12);}
+.pstep.done{background:var(--g);}
+.popup-title{font-family:var(--serif);font-size:clamp(22px,4vw,30px);font-weight:400;margin-bottom:6px;}
+.popup-sub{font-family:var(--sans);font-size:clamp(13px,1.8vw,15px);color:var(--td);margin-bottom:24px;line-height:1.5;}
+.wa-badge{display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(37,211,102,0.06);border:0.5px solid rgba(37,211,102,0.2);margin-bottom:22px;font-size:clamp(12px,1.6vw,13px);color:var(--td);}
+.f-group{margin-bottom:16px;}
+.f-label{font-family:var(--sans);font-size:10px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,242,235,0.35);margin-bottom:7px;display:block;}
+.f-input,.f-select,.f-ta{width:100%;background:#060e0a;border:0.5px solid rgba(255,255,255,0.1);padding:clamp(11px,2vw,14px) clamp(13px,2vw,17px);color:var(--t);font-size:clamp(14px,2vw,16px);font-family:var(--sans);outline:none;transition:border-color 0.2s;appearance:none;border-radius:0;}
+.f-input:focus,.f-select:focus,.f-ta:focus{border-color:var(--g);}
+.f-input::placeholder,.f-ta::placeholder{color:rgba(245,242,235,0.2);}
+.f-select option{background:#0c1810;}
+.f-ta{resize:none;min-height:80px;}
+.phone-row{display:flex;}
+.phone-code{background:#060e0a;border:0.5px solid rgba(255,255,255,0.1);border-right:none;padding:clamp(11px,2vw,14px) clamp(12px,2vw,16px);font-size:clamp(14px,2vw,16px);color:var(--td);white-space:nowrap;font-family:var(--sans);}
+.otp-row{display:flex;gap:clamp(6px,1.5vw,10px);}
+.otp-box{flex:1;min-width:0;background:#060e0a;border:0.5px solid rgba(255,255,255,0.1);padding:clamp(10px,2vw,14px) 4px;color:var(--t);font-size:clamp(18px,3vw,24px);font-family:var(--sans);outline:none;text-align:center;transition:border-color 0.2s;}
+.otp-box:focus{border-color:var(--g);}
+.popup-foot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;flex-wrap:wrap;gap:10px;}
+.link-btn{font-family:var(--sans);font-size:12px;color:var(--td);cursor:pointer;text-decoration:underline;background:none;border:none;}
+.link-btn:hover{color:var(--g);}
+.popup-success{text-align:center;padding:24px 0;}
+.popup-success .big-check{font-size:48px;margin-bottom:16px;}
+.popup-success p{font-family:var(--serif);font-size:clamp(18px,3vw,22px);font-style:italic;color:var(--td);line-height:1.6;}
+
+/* ═══════════════════════════════════════
+   1. HERO
+═══════════════════════════════════════ */
+#hero{background:var(--bg);}
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;}
+.hero-content{position:relative;z-index:5;text-align:center;pointer-events:none;padding:0 clamp(16px,5vw,40px);max-width:min(1100px,100%);}
+.hero-content .btn-p,.hero-content .btn-g{pointer-events:all;}
+.h-eyebrow{font-family:var(--sans);font-size:clamp(10px,1.5vw,13px);font-weight:400;letter-spacing:0.24em;text-transform:uppercase;color:var(--g);margin-bottom:clamp(16px,3vw,28px);opacity:0;animation:fadeUp 1s ease 0.3s forwards;}
+.h-title{font-family:var(--display);font-size:clamp(48px,10vw,118px);line-height:1.02;margin-bottom:clamp(16px,3vw,28px);opacity:0;animation:fadeUp 1s ease 0.55s forwards;}
+.h-title em{color:var(--g);font-style:italic;}
+.h-sub{font-family:var(--serif);font-size:clamp(16px,2.5vw,24px);font-weight:300;font-style:italic;color:rgba(245,242,235,0.65);max-width:min(580px,90%);margin:0 auto clamp(28px,5vw,48px);line-height:1.7;opacity:0;animation:fadeUp 1s ease 0.75s forwards;}
+.h-btns{display:flex;gap:clamp(10px,2vw,18px);justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 1s ease 0.95s forwards;}
+.scroll-cue{position:absolute;bottom:clamp(20px,4vw,34px);left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeUp 1s ease 1.5s forwards;pointer-events:none;}
+.scroll-cue span{font-family:var(--sans);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--tf);}
+.scroll-line{width:1px;height:clamp(24px,4vw,36px);background:rgba(29,158,117,0.5);animation:sPulse 2.2s ease-in-out infinite;}
+
+/* ═══════════════════════════════════════
+   2. SYMPTOMS — huge cards
+═══════════════════════════════════════ */
+#symptoms{background:#040b07;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.sym-bg{position:absolute;inset:0;opacity:0.035;background-image:repeating-linear-gradient(0deg,rgba(29,158,117,0.5) 0,transparent 1px,transparent 56px),repeating-linear-gradient(90deg,rgba(29,158,117,0.5) 0,transparent 1px,transparent 56px),repeating-linear-gradient(45deg,rgba(29,158,117,0.25) 0,transparent 1px,transparent 40px),repeating-linear-gradient(-45deg,rgba(29,158,117,0.25) 0,transparent 1px,transparent 40px);}
+.sym-content{position:relative;z-index:2;width:100%;display:flex;flex-direction:column;align-items:center;padding-top:clamp(80px,12vh,120px);}
+.sym-header{text-align:center;margin-bottom:clamp(32px,6vh,56px);padding:0 clamp(16px,5vw,40px);}
+.sym-header .sec-title{font-size:clamp(28px,5vw,60px);}
+.car-wrap{width:100%;overflow:hidden;position:relative;}
+.car-wrap::before,.car-wrap::after{content:'';position:absolute;top:0;bottom:0;width:clamp(60px,8vw,160px);z-index:2;pointer-events:none;}
+.car-wrap::before{left:0;background:linear-gradient(to right,#040b07,transparent);}
+.car-wrap::after{right:0;background:linear-gradient(to left,#040b07,transparent);}
+.car-track{display:flex;gap:clamp(14px,2vw,24px);width:max-content;animation:carScroll 40s linear infinite;}
+.car-track:hover{animation-play-state:paused;}
+
+/* BIG cards */
+.sym-card{border-radius:clamp(12px,2vw,20px);overflow:hidden;width:clamp(260px,36vw,400px);border:0.5px solid var(--br);transition:transform 0.35s,border-color 0.3s;cursor:default;position:relative;flex-shrink:0;}
+.sym-card:hover{transform:translateY(-10px);border-color:rgba(29,158,117,0.55);}
+.sym-card-img{width:100%;height:clamp(180px,26vw,280px);object-fit:cover;display:block;filter:brightness(0.6) saturate(0.65);}
+.sym-card-body{padding:clamp(16px,2.5vw,26px) clamp(18px,3vw,28px) clamp(18px,3vw,28px);}
+.sym-name{font-family:var(--serif);font-size:clamp(20px,3vw,28px);font-weight:400;margin-bottom:8px;}
+.sym-desc{font-size:clamp(13px,1.6vw,15px);color:var(--td);line-height:1.6;font-weight:300;margin-bottom:14px;}
+.sym-tag{font-size:clamp(10px,1.2vw,11px);letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;background:var(--gb);color:var(--g);font-weight:400;display:inline-block;}
+@keyframes carScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+/* ═══════════════════════════════════════
+   3. ABOUT
+═══════════════════════════════════════ */
+#about{background:#060e0a;}
+.orbs{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);animation:orbFloat linear infinite;}
+@keyframes orbFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-28px);}}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,88px);align-items:center;max-width:min(1100px,100%);width:100%;padding:0 clamp(20px,6vw,64px);position:relative;z-index:2;opacity:0;transform:translateY(36px);transition:opacity 0.9s,transform 0.9s;}
+.about-inner.in{opacity:1;transform:translateY(0);}
+@media(max-width:700px){.about-inner{grid-template-columns:1fr;gap:28px;overflow-y:auto;padding-top:80px;align-items:start;max-height:100vh;}}
+.about-left .sec-title{font-size:clamp(26px,5vw,56px);margin-bottom:clamp(16px,3vw,26px);}
+.about-left p{font-family:var(--serif);font-size:clamp(15px,2vw,20px);font-style:italic;color:var(--td);line-height:1.85;font-weight:300;margin-bottom:clamp(20px,4vw,36px);}
+.tilt-cards{display:flex;flex-direction:column;gap:clamp(10px,1.5vw,14px);}
+.tc{background:rgba(12,24,16,0.8);border:0.5px solid var(--br);padding:clamp(16px,2.5vw,22px) clamp(20px,3vw,30px);display:flex;justify-content:space-between;align-items:center;transition:border-color 0.25s,transform 0.3s;cursor:default;backdrop-filter:blur(8px);}
+.tc:hover{border-color:rgba(29,158,117,0.45);transform:translateX(10px);}
+.tc-label{font-family:var(--sans);font-size:clamp(12px,1.5vw,14px);letter-spacing:0.04em;color:rgba(245,242,235,0.4);}
+.tc-val{font-family:var(--serif);font-size:clamp(28px,4vw,42px);font-weight:300;color:var(--g);letter-spacing:-0.02em;line-height:1;}
+
+/* ═══════════════════════════════════════
+   4. SERVICES
+═══════════════════════════════════════ */
+#services{background:#050c08;}
+.svc-bg-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0.4;}
+.svc-inner{max-width:min(1120px,100%);width:100%;padding:0 clamp(16px,5vw,56px);position:relative;z-index:2;opacity:0;transform:translateY(36px);transition:opacity 0.9s,transform 0.9s;}
+.svc-inner.in{opacity:1;transform:translateY(0);}
+.svc-head{text-align:center;margin-bottom:clamp(28px,5vw,44px);}
+.svc-head .sec-title{font-size:clamp(26px,5vw,58px);}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--br);}
+@media(max-width:700px){.svc-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:420px){.svc-grid{grid-template-columns:1fr;}}
+.svc-card{background:#050c08;padding:clamp(20px,3vw,32px) clamp(16px,2.5vw,30px);position:relative;overflow:hidden;cursor:pointer;transition:background 0.3s;}
+.svc-card::before{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--g);transition:width 0.4s ease;}
+.svc-card:hover{background:#091208;}
+.svc-card:hover::before{width:100%;}
+.svc-card:hover .svc-num{opacity:0.16;transform:translateY(0);}
+.svc-card:hover .svc-arr{opacity:1;transform:translateX(5px);}
+.svc-card:hover h3{color:var(--g);}
+.svc-ico{width:38px;height:38px;display:flex;align-items:center;justify-content:center;margin-bottom:clamp(12px,2vw,20px);border-bottom:1px solid rgba(29,158,117,0.3);padding-bottom:12px;}
+.svc-ico svg{width:18px;height:18px;stroke:var(--g);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
+.svc-num{position:absolute;bottom:-8px;right:14px;font-family:var(--display);font-size:clamp(52px,7vw,80px);color:var(--g);opacity:0;transform:translateY(8px);transition:opacity 0.4s,transform 0.4s;line-height:1;pointer-events:none;}
+.svc-card h3{font-family:var(--serif);font-size:clamp(16px,2.2vw,22px);font-weight:400;margin-bottom:8px;transition:color 0.3s;}
+.svc-card p{font-size:clamp(12px,1.5vw,14px);color:var(--td);line-height:1.65;font-weight:300;}
+.svc-arr{font-size:clamp(14px,2vw,18px);color:var(--g);margin-top:clamp(10px,2vw,16px);display:block;opacity:0;transition:opacity 0.3s,transform 0.3s;}
+
+/* ═══════════════════════════════════════
+   5. AUDIO
+═══════════════════════════════════════ */
+#audio{background:#060f0a;}
+.audio-inner{max-width:min(900px,100%);width:100%;padding:0 clamp(16px,5vw,56px);position:relative;z-index:2;opacity:0;transform:translateY(36px);transition:opacity 0.9s,transform 0.9s;}
+.audio-inner.in{opacity:1;transform:translateY(0);}
+.audio-inner .sec-title{font-size:clamp(26px,4.5vw,54px);margin-bottom:clamp(20px,3vw,30px);}
+.pf{background:rgba(12,24,16,0.9);border:0.5px solid rgba(29,158,117,0.3);padding:clamp(18px,3vw,30px) clamp(18px,3vw,34px);margin-bottom:clamp(10px,2vw,16px);backdrop-filter:blur(10px);}
+.pf-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:clamp(14px,2.5vw,22px);gap:12px;}
+.pf-name{font-family:var(--serif);font-size:clamp(20px,3vw,30px);font-weight:400;}
+.pf-meta{font-family:var(--sans);font-size:clamp(11px,1.5vw,13px);color:var(--td);margin-top:4px;letter-spacing:0.04em;}
+.pf-btn{width:clamp(42px,6vw,52px);height:clamp(42px,6vw,52px);min-width:42px;background:var(--g);border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s,transform 0.15s;}
+.pf-btn:hover{background:var(--gd);transform:scale(1.1);}
+.pf-btn svg{fill:white;flex-shrink:0;}
+.waves{height:clamp(36px,6vw,52px);display:flex;align-items:center;gap:2px;margin-bottom:10px;cursor:pointer;}
+.wave-bar{flex:1;background:rgba(29,158,117,0.18);border-radius:2px;transition:background 0.15s;min-height:3px;}
+.wave-bar.played{background:var(--g);}
+.wave-bar:hover{background:rgba(29,158,117,0.55);}
+.pf-times{display:flex;justify-content:space-between;font-size:clamp(11px,1.5vw,13px);color:var(--tf);letter-spacing:0.05em;}
+.tl{display:flex;flex-direction:column;gap:2px;background:var(--br);}
+.tl-item{display:flex;align-items:center;gap:clamp(12px,2vw,20px);padding:clamp(11px,2vw,14px) clamp(14px,2.5vw,20px);background:#060f0a;cursor:pointer;transition:background 0.2s;}
+.tl-item:hover,.tl-item.active{background:#091408;}
+.tl-n{font-family:var(--sans);font-size:12px;color:var(--tf);width:22px;flex-shrink:0;letter-spacing:0.08em;}
+.tl-item.active .tl-n{color:var(--g);}
+.tl-info{flex:1;min-width:0;}
+.tl-name{font-family:var(--serif);font-size:clamp(15px,2vw,18px);font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tl-dur{font-family:var(--sans);font-size:clamp(11px,1.3vw,12px);color:var(--td);margin-top:2px;letter-spacing:0.04em;}
+.tl-progress{width:clamp(48px,8vw,80px);height:2px;background:rgba(255,255,255,0.07);flex-shrink:0;}
+.tl-pf{height:100%;background:var(--g);width:0%;transition:width 0.5s;}
+
+/* ═══════════════════════════════════════
+   6. BOOK — calendar full + form
+═══════════════════════════════════════ */
+#book{background:#04090b;}
+.book-inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);max-width:min(1120px,100%);width:100%;padding:clamp(80px,12vh,110px) clamp(16px,5vw,56px) clamp(20px,4vw,40px);align-items:start;position:relative;z-index:2;opacity:0;transform:translateY(36px);transition:opacity 0.9s,transform 0.9s;overflow-y:auto;max-height:100vh;}
+.book-inner.in{opacity:1;transform:translateY(0);}
+@media(max-width:700px){.book-inner{grid-template-columns:1fr;}}
+.book-left .sec-title{font-size:clamp(24px,4vw,48px);margin-bottom:clamp(10px,2vw,18px);}
+.book-left>p{font-family:var(--serif);font-size:clamp(14px,1.8vw,18px);font-style:italic;color:var(--td);line-height:1.8;font-weight:300;margin-bottom:clamp(16px,3vw,26px);}
+
+/* CALENDAR */
+.cal{background:rgba(8,18,14,0.95);border:0.5px solid var(--br);padding:clamp(16px,3vw,26px);backdrop-filter:blur(10px);}
+.cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:clamp(14px,2.5vw,22px);}
+.cal-month{font-family:var(--serif);font-size:clamp(17px,2.5vw,22px);font-weight:400;}
+.cal-nav{display:flex;gap:6px;}
+.cal-nav button{width:clamp(28px,4vw,34px);height:clamp(28px,4vw,34px);background:transparent;border:0.5px solid var(--br);color:var(--t);cursor:pointer;font-size:clamp(13px,2vw,16px);transition:border-color 0.2s,background 0.2s;}
+.cal-nav button:hover{border-color:var(--g);background:rgba(29,158,117,0.08);}
+.cal-days-header{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;}
+.cal-dname{font-family:var(--sans);font-size:clamp(9px,1.2vw,11px);letter-spacing:0.06em;text-transform:uppercase;color:var(--tf);text-align:center;padding:5px 0;}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:clamp(2px,0.5vw,4px);}
+.cal-day{font-family:var(--sans);font-size:clamp(11px,1.5vw,13px);text-align:center;padding:clamp(6px,1.2vw,9px) 2px;cursor:pointer;transition:background 0.2s,color 0.2s;position:relative;}
+.cal-day:hover:not(.past):not(.empty):not(.fri){background:rgba(29,158,117,0.1);color:var(--t);}
+.cal-day.today{color:var(--g);font-weight:500;}
+.cal-day.today::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:3px;height:3px;background:var(--g);border-radius:50%;}
+.cal-day.selected{background:var(--g) !important;color:#fff !important;}
+.cal-day.past,.cal-day.fri{color:rgba(245,242,235,0.18);cursor:not-allowed;}
+.cal-day.empty{cursor:default;}
+.cal-day.avail:not(.past):not(.fri)::before{content:'';position:absolute;top:2px;right:2px;width:3px;height:3px;background:rgba(29,158,117,0.4);border-radius:50%;}
+
+/* TIME SLOTS */
+.time-panel{margin-top:clamp(12px,2vw,18px);display:none;}
+.time-panel.show{display:block;}
+.tp-title{font-family:var(--sans);font-size:clamp(9px,1.2vw,11px);letter-spacing:0.12em;text-transform:uppercase;color:var(--tf);margin-bottom:clamp(8px,1.5vw,12px);}
+.time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(6px,1vw,9px);}
+@media(max-width:480px){.time-grid{grid-template-columns:repeat(3,1fr);}}
+.time-slot{font-family:var(--sans);font-size:clamp(11px,1.4vw,13px);padding:clamp(8px,1.5vw,11px) 4px;background:rgba(12,24,16,0.9);border:0.5px solid var(--br);text-align:center;cursor:pointer;transition:all 0.18s;letter-spacing:0.02em;color:var(--td);}
+.time-slot:hover{border-color:var(--g);color:var(--g);background:rgba(29,158,117,0.06);}
+.time-slot.sel{background:var(--g);color:#fff;border-color:var(--g);}
+.time-slot.bkd{opacity:0.28;cursor:not-allowed;text-decoration:line-through;}
+
+/* BOOK RIGHT PANEL */
+.book-right{display:flex;flex-direction:column;gap:clamp(14px,2vw,20px);}
+.book-right .sec-title{font-size:clamp(20px,3vw,32px);margin-bottom:4px;}
+.book-right p{font-family:var(--serif);font-size:clamp(14px,1.8vw,17px);font-style:italic;color:var(--td);line-height:1.7;margin-bottom:clamp(12px,2vw,20px);}
+.book-summary-box{background:rgba(29,158,117,0.07);border:0.5px solid rgba(29,158,117,0.25);padding:clamp(12px,2vw,16px) clamp(14px,2.5vw,20px);display:none;}
+.book-summary-box.show{display:block;}
+.bsb-label{font-family:var(--sans);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--g);margin-bottom:6px;}
+.bsb-val{font-family:var(--serif);font-size:clamp(15px,2vw,18px);color:var(--t);}
+.book-register-cta{background:rgba(8,18,14,0.95);border:0.5px solid var(--br);padding:clamp(16px,3vw,24px);display:none;}
+.book-register-cta.show{display:block;}
+.brc-title{font-family:var(--serif);font-size:clamp(17px,2.5vw,22px);font-weight:400;margin-bottom:8px;}
+.brc-sub{font-size:clamp(12px,1.5vw,14px);color:var(--td);margin-bottom:16px;line-height:1.5;}
+.book-confirm-form{display:none;}
+.book-confirm-form.show{display:flex;flex-direction:column;gap:clamp(12px,2vw,16px);}
+.f-ok{display:none;padding:clamp(12px,2vw,16px) clamp(14px,2.5vw,18px);background:rgba(29,158,117,0.08);border:0.5px solid rgba(29,158,117,0.3);font-size:clamp(13px,1.8vw,15px);color:#5DCAA5;line-height:1.5;font-family:var(--serif);font-style:italic;}
+.f-ok.show{display:block;}
+
+/* ═══════════════════════════════════════
+   7. CTA
+═══════════════════════════════════════ */
+#cta{background:#050c08;}
+.cta-rings{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden;}
+.cta-ring{position:absolute;border-radius:50%;border:0.5px solid rgba(29,158,117,0.1);animation:ringPulse linear infinite;}
+@keyframes ringPulse{0%{transform:scale(0.2);opacity:0;}50%{opacity:1;}100%{transform:scale(2.8);opacity:0;}}
+.cta-inner{position:relative;z-index:2;text-align:center;max-width:min(700px,90%);padding:0 clamp(16px,5vw,40px);opacity:0;transform:translateY(36px);transition:opacity 0.9s,transform 0.9s;}
+.cta-inner.in{opacity:1;transform:translateY(0);}
+.cta-title{font-family:var(--display);font-size:clamp(44px,9vw,90px);line-height:1.04;margin-bottom:clamp(16px,3vw,24px);}
+.cta-title em{color:var(--g);font-style:italic;}
+.cta-sub{font-family:var(--serif);font-size:clamp(16px,2.2vw,22px);font-style:italic;color:var(--td);line-height:1.75;margin-bottom:clamp(28px,5vw,44px);font-weight:300;}
+.cta-btns{display:flex;gap:clamp(10px,2vw,18px);justify-content:center;flex-wrap:wrap;}
+.footer-bar{position:absolute;bottom:0;left:0;right:0;padding:clamp(14px,2.5vw,22px) clamp(16px,5vw,56px);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;border-top:0.5px solid rgba(255,255,255,0.05);}
+.footer-logo{font-family:var(--display);font-size:clamp(16px,2.5vw,20px);color:rgba(245,242,235,0.3);}
+.footer-logo span{color:var(--g);}
+.footer-copy{font-family:var(--sans);font-size:clamp(10px,1.3vw,11px);color:rgba(245,242,235,0.2);letter-spacing:0.04em;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+@keyframes sPulse{0%,100%{opacity:0.2;}50%{opacity:1;}}
+</style>
+</head>
+<body>
+
+<!-- CURSOR (desktop only) -->
+<div id="cur"></div>
+<div id="ring"></div>
+
+<!-- REGISTRATION POPUP -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup">
+    <button class="popup-close" onclick="closePopup()">✕</button>
+    <div class="popup-steps" id="popupSteps">
+      <div class="pstep done"></div>
+      <div class="pstep"></div>
+      <div class="pstep"></div>
+    </div>
+
+    <!-- Step 1: Details -->
+    <div id="pStep1">
+      <div class="popup-title">Create your account</div>
+      <div class="popup-sub">Enter your WhatsApp number — we'll verify it with a one-time code.</div>
+      <div class="wa-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.549 4.122 1.515 5.86L.057 23.25l5.562-1.44A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.894a9.88 9.88 0 01-5.031-1.374l-.361-.214-3.741.981.998-3.648-.235-.374A9.861 9.861 0 012.106 12C2.106 6.579 6.579 2.106 12 2.106S21.894 6.579 21.894 12 17.421 21.894 12 21.894z"/></svg>
+        Verification sent via WhatsApp message
+      </div>
+      <div class="f-group">
+        <label class="f-label">Full name</label>
+        <input class="f-input" type="text" placeholder="Your full name" id="regName"/>
+      </div>
+      <div class="f-group">
+        <label class="f-label">WhatsApp number</label>
+        <div class="phone-row">
+          <div class="phone-code">🇬🇧 +44</div>
+          <input class="f-input" type="tel" placeholder="7911 123456" id="regPhone" style="border-left:none;"/>
+        </div>
+      </div>
+      <button class="btn-p" style="width:100%;margin-top:8px;" onclick="sendOTP()">Send OTP via WhatsApp →</button>
+      <div class="popup-foot">
+        <button class="link-btn" onclick="closePopup()">Maybe later</button>
+        <button class="link-btn" onclick="skipToLogin()">Already registered?</button>
+      </div>
+    </div>
+
+    <!-- Step 2: OTP -->
+    <div id="pStep2" style="display:none;">
+      <div class="popup-title">Check WhatsApp</div>
+      <div class="popup-sub" id="otpSub">6-digit code sent to your number</div>
+      <div class="wa-badge">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.549 4.122 1.515 5.86L.057 23.25l5.562-1.44A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.894a9.88 9.88 0 01-5.031-1.374l-.361-.214-3.741.981.998-3.648-.235-.374A9.861 9.861 0 012.106 12C2.106 6.579 6.579 2.106 12 2.106S21.894 6.579 21.894 12 17.421 21.894 12 21.894z"/></svg>
+        Enter the code exactly as sent
+      </div>
+      <div class="f-group">
+        <label class="f-label">One-time code</label>
+        <div class="otp-row" id="otpRow">
+          <input class="otp-box" maxlength="1" type="text" inputmode="numeric"/>
+          <input class="otp-box" maxlength="1" type="text" inputmode="numeric"/>
+          <input class="otp-box" maxlength="1" type="text" inputmode="numeric"/>
+          <input class="otp-box" maxlength="1" type="text" inputmode="numeric"/>
+          <input class="otp-box" maxlength="1" type="text" inputmode="numeric"/>
+          <input class="otp-box" maxlength="1" type="text" inputmode="numeric"/>
+        </div>
+      </div>
+      <button class="btn-p" style="width:100%;margin-top:8px;" onclick="verifyOTP()">Verify &amp; continue →</button>
+      <div class="popup-foot">
+        <button class="link-btn" onclick="goStep(1)">← Back</button>
+        <button class="link-btn" onclick="resendOTP()">Resend code</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Success -->
+    <div id="pStep3" style="display:none;">
+      <div class="popup-success">
+        <div class="big-check">✓</div>
+        <div class="popup-title" style="margin-bottom:12px;">You're registered!</div>
+        <p>Welcome, <span id="welcomeName">friend</span>. You can now book your session. May Allah grant you shifa.</p>
+        <button class="btn-p" style="margin-top:28px;width:100%;" onclick="closePopup();goTo('book');">Book a session →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Radio <span>Ruqyah</span></div>
+  <div class="nav-links">
+    <a onclick="goTo('symptoms')">Symptoms</a>
+    <a onclick="goTo('about')">About</a>
+    <a onclick="goTo('services')">Services</a>
+    <a onclick="goTo('audio')">Listen</a>
+    <a onclick="goTo('book')">Book</a>
+  </div>
+  <button class="nav-cta" onclick="openPopup()">Register / Book</button>
+</nav>
+
+<div class="dot-nav">
+  <button class="dot active"></button>
+  <button class="dot"></button>
+  <button class="dot"></button>
+  <button class="dot"></button>
+  <button class="dot"></button>
+  <button class="dot"></button>
+  <button class="dot"></button>
+</div>
+
+<div class="scroller" id="scroller">
+
+<!-- 1. HERO -->
+<section id="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-content">
+    <div class="h-eyebrow">Spiritual healing through Quran &amp; Sunnah</div>
+    <h1 class="h-title">Healing rooted in<br><em>faith &amp; tradition</em></h1>
+    <p class="h-sub">Certified practitioners. Authentic Ruqyah. From wherever you are.</p>
+    <div class="h-btns">
+      <button class="btn-p" onclick="openPopup()">Register &amp; Book</button>
+      <button class="btn-g" onclick="goTo('symptoms')">What we treat</button>
+    </div>
+  </div>
+  <div class="scroll-cue"><div class="scroll-line"></div><span>Scroll to explore</span></div>
+</section>
+
+<!-- 2. SYMPTOMS -->
+<section id="symptoms">
+  <div class="sym-bg"></div>
+  <div class="sym-content">
+    <div class="sym-header">
+      <div class="sec-label">What we treat</div>
+      <h2 class="sec-title">Conditions people come to us with</h2>
+    </div>
+    <div class="car-wrap">
+      <div class="car-track" id="carTrack"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. ABOUT -->
+<section id="about">
+  <div class="orbs" id="orbsEl"></div>
+  <div class="about-inner" id="aboutInner">
+    <div class="about-left">
+      <div class="sec-label">What is Ruqyah</div>
+      <h2 class="sec-title">Healing the soul<br>through the<br>words of Allah</h2>
+      <p>Ruqyah is the practice of reciting Quranic verses and authentic du'as — as established in the Sunnah of the Prophet ﷺ. No innovation. No deviation.</p>
+      <button class="btn-p" onclick="openPopup()">Start your journey</button>
+    </div>
+    <div class="tilt-cards">
+      <div class="tc"><span class="tc-label">Sessions completed</span><span class="tc-val" data-target="12400">0</span></div>
+      <div class="tc"><span class="tc-label">Certified practitioners</span><span class="tc-val" data-target="34">0</span></div>
+      <div class="tc"><span class="tc-label">Countries served</span><span class="tc-val" data-target="28">0</span></div>
+      <div class="tc"><span class="tc-label">Years established</span><span class="tc-val" data-target="9">0</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. SERVICES -->
+<section id="services">
+  <canvas id="svcCanvas" class="svc-bg-canvas"></canvas>
+  <div class="svc-inner" id="svcInner">
+    <div class="svc-head">
+      <div class="sec-label">Our services</div>
+      <h2 class="sec-title">Everything you need, in one place</h2>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card" onclick="openPopup()"><div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.9L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg></div><div class="svc-num">01</div><h3>Live sessions</h3><p>One-on-one remote Ruqyah with a certified practitioner over audio or video call.</p><span class="svc-arr">→</span></div>
+      <div class="svc-card" onclick="openPopup()"><div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div><div class="svc-num">02</div><h3>Symptom review</h3><p>Submit your symptoms and receive a personalised assessment and Ruqyah plan.</p><span class="svc-arr">→</span></div>
+      <div class="svc-card" onclick="goTo('audio')"><div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M9 19V6l12-3v13M9 19c0 1.1-1.34 2-3 2s-3-.9-3-2 1.34-2 3-2 3 .9 3 2zm12-3c0 1.1-1.34 2-3 2s-3-.9-3-2 1.34-2 3-2 3 .9 3 2z"/></svg></div><div class="svc-num">03</div><h3>Audio library</h3><p>Stream authenticated Ruqyah recitations for daily listening and protection.</p><span class="svc-arr">→</span></div>
+      <div class="svc-card" onclick="openPopup()"><div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><div class="svc-num">04</div><h3>Follow-up care</h3><p>Ongoing check-ins with your practitioner to monitor progress and adjust plans.</p><span class="svc-arr">→</span></div>
+      <div class="svc-card" onclick="openPopup()"><div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg></div><div class="svc-num">05</div><h3>Family sessions</h3><p>Group Ruqyah sessions for families with shared symptoms of spiritual affliction.</p><span class="svc-arr">→</span></div>
+      <div class="svc-card"><div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></div><div class="svc-num">06</div><h3>Learning resources</h3><p>Guides and education on Ruqyah, its conditions, and daily protective recitations.</p><span class="svc-arr">→</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. AUDIO -->
+<section id="audio">
+  <canvas id="audioBg" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+  <div class="audio-inner" id="audioInner">
+    <div class="sec-label">Listen</div>
+    <h2 class="sec-title">Ruqyah audio library</h2>
+    <div class="pf">
+      <div class="pf-top">
+        <div><div class="pf-name" id="pfName">Surah Al-Baqarah</div><div class="pf-meta" id="pfMeta">34 min · Full session Ruqyah</div></div>
+        <button class="pf-btn" onclick="togglePlay()">
+          <svg id="pfPlay" width="16" height="16" viewBox="0 0 10 12"><path d="M0 0l10 6-10 6V0z"/></svg>
+          <svg id="pfPause" width="16" height="16" viewBox="0 0 12 12" style="display:none"><rect x="0" y="0" width="4" height="12" rx="1"/><rect x="7" y="0" width="4" height="12" rx="1"/></svg>
+        </button>
+      </div>
+      <div class="waves" id="waveBars" onclick="seekWave(event)"></div>
+      <div class="pf-times"><span id="pfCur">0:00</span><span id="pfTot">34:07</span></div>
+    </div>
+    <div class="tl" id="tl"></div>
+  </div>
+</section>
+
+<!-- 6. BOOK -->
+<section id="book">
+  <canvas id="bookBg" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.22;"></canvas>
+  <div class="book-inner" id="bookInner">
+    <div class="book-left">
+      <div class="sec-label">Book a session</div>
+      <h2 class="sec-title">Choose your date &amp; time</h2>
+      <p>Sessions are 1 hour. Select a date, then a time — we'll confirm your booking by WhatsApp.</p>
+      <div class="cal" id="calWidget"></div>
+      <div class="time-panel" id="timePanel">
+        <div class="tp-title">Available times — <span id="selectedDateLabel"></span></div>
+        <div class="time-grid" id="timeGrid"></div>
+      </div>
+    </div>
+    <div class="book-right">
+      <div class="sec-title">Your booking</div>
+      <p>Select a date and time from the calendar, then confirm your session below.</p>
+      <div class="book-summary-box" id="bSummaryBox">
+        <div class="bsb-label">Selected session</div>
+        <div class="bsb-val" id="bSummaryVal">—</div>
+      </div>
+      <div class="book-register-cta" id="bRegCta">
+        <div class="brc-title">Register to confirm</div>
+        <div class="brc-sub">You need a free account to book a session. It only takes 30 seconds via WhatsApp.</div>
+        <button class="btn-p" onclick="openPopup()">Register with WhatsApp →</button>
+      </div>
+      <div class="book-confirm-form" id="bConfirmForm">
+        <div>
+          <label class="f-label">Session type</label>
+          <select class="f-select" id="btype">
+            <option>General Ruqyah</option>
+            <option>Sihr (black magic) treatment</option>
+            <option>Ain (evil eye) treatment</option>
+            <option>Jinn-related concerns</option>
+            <option>Anxiety &amp; spiritual distress</option>
+          </select>
+        </div>
+        <div>
+          <label class="f-label">Additional notes</label>
+          <textarea class="f-ta" placeholder="Describe what you're experiencing..." id="bnotes"></textarea>
+        </div>
+        <div class="f-ok" id="bok">Booking confirmed. A WhatsApp confirmation is on its way. Barakallahu feekum.</div>
+        <button class="btn-p" style="width:100%;" onclick="confirmBook()">Confirm booking →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. CTA -->
+<section id="cta">
+  <div class="cta-rings" id="ctaRings"></div>
+  <div class="cta-inner" id="ctaInner">
+    <div class="sec-label">Begin your healing</div>
+    <h2 class="cta-title">Ready to take the<br><em>first step?</em></h2>
+    <p class="cta-sub">Book a session today — a practitioner will reach out within 48 hours. May Allah grant you complete shifa.</p>
+    <div class="cta-btns">
+      <button class="btn-p" onclick="openPopup()">Register &amp; Book</button>
+      <button class="btn-g" onclick="goTo('symptoms')">Learn more</button>
+    </div>
+  </div>
+  <div class="footer-bar">
+    <div class="footer-logo">Radio <span>Ruqyah</span></div>
+    <div class="footer-copy">Not a substitute for medical advice.</div>
+  </div>
+</section>
+
+</div><!-- /scroller -->
+
+<script>
+/* ══════════ CURSOR ══════════ */
+const cur=document.getElementById('cur'),ring=document.getElementById('ring');
+let mx=-99,my=-99,rx=-99,ry=-99;
+if(window.matchMedia('(hover:hover)').matches){
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+  (function l(){rx+=(mx-rx)*0.13;ry+=(my-ry)*0.13;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(l);})();
+  document.addEventListener('mousedown',()=>{cur.style.transform='translate(-50%,-50%) scale(2.4)';ring.style.transform='translate(-50%,-50%) scale(0.4)';});
+  document.addEventListener('mouseup',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';ring.style.transform='translate(-50%,-50%) scale(1)';});
+  document.querySelectorAll('button,a,.svc-card,.tc,.tl-item,.dot,.sym-card,.cal-day,.time-slot').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ring.style.transform='translate(-50%,-50%) scale(1.7)';ring.style.borderColor='rgba(29,158,117,0.9)';cur.style.transform='translate(-50%,-50%) scale(0.5)';});
+    el.addEventListener('mouseleave',()=>{ring.style.transform='translate(-50%,-50%) scale(1)';ring.style.borderColor='rgba(29,158,117,0.55)';cur.style.transform='translate(-50%,-50%) scale(1)';});
+  });
+}
+
+/* ══════════ HERO CANVAS ══════════ */
+const hC=document.getElementById('heroCanvas'),hX=hC.getContext('2d');
+const hEl=document.getElementById('hero');
+let W,H,hm={x:-999,y:-999},parts=[],tick=0;
+function rC(){W=hC.width=hEl.offsetWidth;H=hC.height=hEl.offsetHeight;}
+rC();window.addEventListener('resize',()=>{rC();parts=[];iP();});
+class Pt{
+  constructor(init){this.reset(init);}
+  reset(init){this.x=Math.random()*W;this.y=init?Math.random()*H:H+10;this.bx=this.x;this.by=this.y;this.r=Math.random()*2.2+0.5;this.vy=-(Math.random()*0.3+0.07);this.vx=(Math.random()-0.5)*0.15;this.op=Math.random()*0.82+0.35;this.ph=Math.random()*Math.PI*2;this.ps=Math.random()*0.022+0.006;this.isChar=Math.random()>0.84;this.char=['﴾','﴿','ۖ','۞','۩','ﷺ','﷽','ۗ'][Math.floor(Math.random()*8)];}
+  update(){this.ph+=this.ps;const dx=hm.x-this.x,dy=hm.y-this.y,d=Math.sqrt(dx*dx+dy*dy);if(d<130&&d>0){const f=(130-d)/130;this.x-=dx/d*f*4.5;this.y-=dy/d*f*4.5;}else{this.x+=(this.bx-this.x)*0.05;this.y+=(this.by-this.y)*0.05;}this.bx+=this.vx;this.by+=this.vy;if(this.by<-20){this.bx=Math.random()*W;this.by=H+10;this.x=this.bx;this.y=this.by;}}
+  draw(){const op=this.op*(0.65+0.35*Math.sin(this.ph));if(this.isChar){hX.fillStyle=`rgba(29,158,117,${op})`;hX.font=`${this.r*10}px serif`;hX.fillText(this.char,this.x,this.y);}else{hX.beginPath();hX.arc(this.x,this.y,this.r,0,Math.PI*2);hX.fillStyle=`rgba(29,158,117,${op})`;hX.fill();}}
+}
+function iP(){for(let i=0;i<(window.innerWidth<600?80:160);i++)parts.push(new Pt(true));}
+iP();
+(function hL(){tick++;hX.clearRect(0,0,W,H);hX.fillStyle='#050c08';hX.fillRect(0,0,W,H);
+const cx=W/2,cy=H/2;
+for(let r=1;r<=6;r++){hX.beginPath();for(let i=0;i<=8;i++){const a=(i/8)*Math.PI*2+tick*0.0025*(r%2?1:-1);hX.lineTo?hX.lineTo(cx+Math.cos(a)*r*80,cy+Math.sin(a)*r*80):hX.moveTo(cx+Math.cos(a)*r*80,cy+Math.sin(a)*r*80);i===0?hX.moveTo(cx+Math.cos(a)*r*80,cy+Math.sin(a)*r*80):hX.lineTo(cx+Math.cos(a)*r*80,cy+Math.sin(a)*r*80);}hX.strokeStyle=`rgba(29,158,117,${Math.max(0.015,0.08-r*0.012)})`;hX.lineWidth=0.8;hX.stroke();}
+if(hm.x>0){for(let r=1;r<=3;r++){hX.beginPath();hX.arc(hm.x,hm.y,64*r+Math.sin(tick*0.07)*9,0,Math.PI*2);hX.strokeStyle=`rgba(29,158,117,${0.14/r})`;hX.lineWidth=0.8;hX.stroke();}}
+for(let i=0;i<parts.length;i++)for(let j=i+1;j<parts.length;j++){const dx=parts[i].x-parts[j].x,dy=parts[i].y-parts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<90){hX.beginPath();hX.moveTo(parts[i].x,parts[i].y);hX.lineTo(parts[j].x,parts[j].y);hX.strokeStyle=`rgba(29,158,117,${(1-d/90)*0.25})`;hX.lineWidth=0.5;hX.stroke();}}
+parts.forEach(p=>{p.update();p.draw();});requestAnimationFrame(hL);})();
+hEl.addEventListener('mousemove',e=>{const r=hEl.getBoundingClientRect();hm.x=e.clientX-r.left;hm.y=e.clientY-r.top;});
+hEl.addEventListener('mouseleave',()=>{hm.x=-999;hm.y=-999;});
+hEl.addEventListener('touchmove',e=>{const r=hEl.getBoundingClientRect(),t=e.touches[0];hm.x=t.clientX-r.left;hm.y=t.clientY-r.top;},{passive:true});
+
+/* ══════════ SERVICES BG ══════════ */
+const sC=document.getElementById('svcCanvas'),sX=sC.getContext('2d');
+function rS(){sC.width=sC.parentElement.offsetWidth;sC.height=sC.parentElement.offsetHeight;}
+rS();window.addEventListener('resize',rS);
+let sT=0;
+(function sL(){sT++;sX.clearRect(0,0,sC.width,sC.height);sX.fillStyle='#050c08';sX.fillRect(0,0,sC.width,sC.height);for(let i=0;i<10;i++){const y=(sT*0.5+i*85)%(sC.height+100)-50;sX.beginPath();sX.moveTo(0,y);sX.lineTo(sC.width,y+55);sX.strokeStyle='rgba(29,158,117,0.04)';sX.lineWidth=1;sX.stroke();}requestAnimationFrame(sL);})();
+
+/* ══════════ AUDIO BG ══════════ */
+const aC=document.getElementById('audioBg'),aX=aC.getContext('2d');
+function rA(){aC.width=aC.parentElement.offsetWidth;aC.height=aC.parentElement.offsetHeight;}
+rA();window.addEventListener('resize',rA);
+let aT=0;
+(function aL(){aT++;aX.clearRect(0,0,aC.width,aC.height);aX.fillStyle='#060f0a';aX.fillRect(0,0,aC.width,aC.height);const cy=aC.height/2;for(let i=0;i<4;i++){aX.beginPath();for(let x=0;x<aC.width;x++){const y=cy+Math.sin((x*0.01)+(aT*0.025)+i*1.1)*((i+1)*22);x===0?aX.moveTo(x,y):aX.lineTo(x,y);}aX.strokeStyle=`rgba(29,158,117,${0.07-i*0.015})`;aX.lineWidth=1;aX.stroke();}requestAnimationFrame(aL);})();
+
+/* ══════════ BOOK BG ══════════ */
+const bC=document.getElementById('bookBg'),bX=bC.getContext('2d');
+function rB(){bC.width=bC.parentElement.offsetWidth;bC.height=bC.parentElement.offsetHeight;}
+rB();window.addEventListener('resize',rB);
+let bT=0;
+(function bL(){bT++;bX.clearRect(0,0,bC.width,bC.height);bX.fillStyle='#04090b';bX.fillRect(0,0,bC.width,bC.height);const cx=bC.width*0.8,cy=bC.height*0.25;for(let i=0;i<20;i++){const a=(i/20)*Math.PI*2+bT*0.002,len=280+Math.sin(bT*0.04+i)*55;bX.beginPath();bX.moveTo(cx,cy);bX.lineTo(cx+Math.cos(a)*len,cy+Math.sin(a)*len);bX.strokeStyle='rgba(29,158,117,0.04)';bX.lineWidth=1;bX.stroke();}requestAnimationFrame(bL);})();
+
+/* ══════════ ORBS ══════════ */
+const orbsEl=document.getElementById('orbsEl');
+[{w:500,h:500,t:'10%',l:'55%',d:9},{w:320,h:320,t:'60%',l:'2%',d:13},{w:420,h:420,t:'35%',l:'78%',d:11}].forEach((o,i)=>{
+  const el=document.createElement('div');el.className='orb';
+  el.style.cssText=`width:${o.w}px;height:${o.h}px;top:${o.t};left:${o.l};background:rgba(29,158,117,${0.05-i*0.01});animation-duration:${o.d}s;animation-delay:${i*-3}s;`;
+  orbsEl.appendChild(el);
+});
+
+/* ══════════ CTA RINGS ══════════ */
+const ctaR=document.getElementById('ctaRings');
+for(let i=0;i<7;i++){const el=document.createElement('div');el.className='cta-ring';el.style.cssText=`width:${180+i*90}px;height:${180+i*90}px;animation-duration:${5+i*2}s;animation-delay:${i*-1.2}s;`;ctaR.appendChild(el);}
+
+/* ══════════ CAROUSEL ══════════ */
+const symptoms=[
+  {img:'https://images.unsplash.com/photo-1512495039889-52a3b799c9bc?w=600&q=75',name:'Disturbed sleep',desc:'Recurring nightmares, inability to sleep, waking in terror.',tag:'Very common'},
+  {img:'https://images.unsplash.com/photo-1508243771214-6e95d137426b?w=600&q=75',name:'Evil eye (Ain)',desc:'Sudden unexplained illness or misfortune after being praised.',tag:'Common'},
+  {img:'https://images.unsplash.com/photo-1474533410695-da5b675aa1b9?w=600&q=75',name:'Black magic (Sihr)',desc:'Personality changes, broken relationships, chronic suffering.',tag:'Common'},
+  {img:'https://images.unsplash.com/photo-1548438294-1ad5d5f4f063?w=600&q=75',name:'Anxiety & fear',desc:'Unexplained dread, panic attacks, sense of being watched.',tag:'Very common'},
+  {img:'https://images.unsplash.com/photo-1541199249251-f713e6145474?w=600&q=75',name:'Obsessive thoughts',desc:'Intrusive thoughts about faith or self that won\'t cease.',tag:'Common'},
+  {img:'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=600&q=75',name:'Home affliction',desc:'Strange occurrences and unrest within the household.',tag:'Moderate'},
+  {img:'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=75',name:'Marital problems',desc:'Sudden aversion between spouses with no clear cause.',tag:'Common'},
+  {img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=75',name:'Physical illness',desc:'Chronic pain or illness with no medical explanation found.',tag:'Moderate'},
+  {img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=75',name:'Spiritual weakness',desc:'Disconnection from prayer, Quran, all acts of worship.',tag:'Common'},
+  {img:'https://images.unsplash.com/photo-1493836512294-502baa1986e2?w=600&q=75',name:'Jinn possession',desc:'Loss of control, blackouts, strange voices or reactions.',tag:'Serious'},
+];
+const cT=document.getElementById('carTrack');
+[...symptoms,...symptoms].forEach(s=>{
+  const el=document.createElement('div');el.className='sym-card';
+  el.innerHTML=`<img class="sym-card-img" src="${s.img}" alt="${s.name}" loading="lazy"/><div class="sym-card-body"><div class="sym-name">${s.name}</div><div class="sym-desc">${s.desc}</div><div class="sym-tag">${s.tag}</div></div>`;
+  cT.appendChild(el);
+});
+
+/* ══════════ SCROLL NAV ══════════ */
+const scroller=document.getElementById('scroller');
+const secIds=['hero','symptoms','about','services','audio','book','cta'];
+const dots=document.querySelectorAll('.dot');
+function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+const secObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const i=secIds.indexOf(e.target.id);if(i>=0)dots.forEach((d,j)=>d.classList.toggle('active',i===j));}});},{root:scroller,threshold:0.5});
+secIds.forEach(id=>secObs.observe(document.getElementById(id)));
+dots.forEach((d,i)=>d.addEventListener('click',()=>goTo(secIds[i])));
+
+/* REVEAL */
+['aboutInner','svcInner','audioInner','bookInner','ctaInner'].forEach(id=>{
+  new IntersectionObserver(entries=>{if(entries[0].isIntersecting)document.getElementById(id).classList.add('in');},{root:scroller,threshold:0.15}).observe(document.getElementById(id));
+});
+
+/* COUNT UP */
+let counted=false;
+new IntersectionObserver(entries=>{if(entries[0].isIntersecting&&!counted){counted=true;document.querySelectorAll('.tc-val[data-target]').forEach(el=>{const target=parseInt(el.dataset.target),suffix=target>100?'+':'';let c=0;const step=target/55,iv=setInterval(()=>{c=Math.min(c+step,target);el.textContent=Math.floor(c).toLocaleString()+(c>=target?suffix:'');if(c>=target)clearInterval(iv);},16);});}},{root:scroller,threshold:0.4}).observe(document.getElementById('about'));
+
+/* ══════════ AUDIO PLAYER ══════════ */
+const TRACKS=[
+  {name:'Surah Al-Baqarah',meta:'34 min · Full session Ruqyah',dur:'34:07',totalSec:2047},
+  {name:'Surah Al-Fatiha',meta:'3 min · General healing',dur:'3:12',totalSec:192},
+  {name:'Ayatul Kursi',meta:'2 min · Protection & strength',dur:'2:48',totalSec:168},
+  {name:"Al-Mu'awwidhatayn",meta:'4 min · Evil eye & sihr',dur:'4:20',totalSec:260},
+];
+let aTrack=0,isPlaying=false,simPct=0,simIv;
+const waveEl=document.getElementById('waveBars');
+const BAR_COUNT=window.innerWidth<600?40:70;
+for(let i=0;i<BAR_COUNT;i++){const b=document.createElement('div');b.className='wave-bar';b.style.height=(12+Math.abs(Math.sin(i*0.42))*52+Math.random()*20)+'px';waveEl.appendChild(b);}
+function updWave(){waveEl.querySelectorAll('.wave-bar').forEach((b,i)=>b.classList.toggle('played',i<Math.floor(simPct/100*BAR_COUNT)));}
+const tlEl=document.getElementById('tl');
+TRACKS.forEach((t,i)=>{const el=document.createElement('div');el.className='tl-item'+(i===0?' active':'');el.innerHTML=`<div class="tl-n">${String(i+1).padStart(2,'0')}</div><div class="tl-info"><div class="tl-name">${t.name}</div><div class="tl-dur">${t.meta}</div></div><div class="tl-progress"><div class="tl-pf"></div></div>`;el.addEventListener('click',()=>selTrack(i));tlEl.appendChild(el);});
+function selTrack(i){aTrack=i;simPct=0;isPlaying=false;clearInterval(simIv);document.getElementById('pfName').textContent=TRACKS[i].name;document.getElementById('pfMeta').textContent=TRACKS[i].meta;document.getElementById('pfTot').textContent=TRACKS[i].dur;document.getElementById('pfCur').textContent='0:00';document.getElementById('pfPlay').style.display='block';document.getElementById('pfPause').style.display='none';document.querySelectorAll('.tl-item').forEach((el,j)=>el.classList.toggle('active',j===i));document.querySelectorAll('.tl-pf').forEach(f=>f.style.width='0%');updWave();}
+function togglePlay(){isPlaying=!isPlaying;document.getElementById('pfPlay').style.display=isPlaying?'none':'block';document.getElementById('pfPause').style.display=isPlaying?'block':'none';if(isPlaying){simIv=setInterval(()=>{simPct=Math.min(simPct+0.1,100);updWave();const s=Math.floor(simPct/100*TRACKS[aTrack].totalSec);document.getElementById('pfCur').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');document.querySelectorAll('.tl-pf')[aTrack].style.width=simPct+'%';if(simPct>=100){isPlaying=false;clearInterval(simIv);document.getElementById('pfPlay').style.display='block';document.getElementById('pfPause').style.display='none';}},150);}else clearInterval(simIv);}
+function seekWave(e){const rect=waveEl.getBoundingClientRect();simPct=Math.max(0,Math.min(100,((e.clientX-rect.left)/rect.width)*100));updWave();const s=Math.floor(simPct/100*TRACKS[aTrack].totalSec);document.getElementById('pfCur').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+
+/* ══════════ CALENDAR ══════════ */
+const today=new Date();today.setHours(0,0,0,0);
+let calY=today.getFullYear(),calM=today.getMonth(),selDate=null,selTime=null;
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DNAMES=['Su','Mo','Tu','We','Th','Fr','Sa'];
+function renderCal(){
+  const first=new Date(calY,calM,1).getDay(),dim=new Date(calY,calM+1,0).getDate();
+  let h=`<div class="cal-header"><div class="cal-month">${MONTHS[calM]} ${calY}</div><div class="cal-nav"><button onclick="chM(-1)">‹</button><button onclick="chM(1)">›</button></div></div>`;
+  h+=`<div class="cal-days-header">${DNAMES.map(d=>`<div class="cal-dname">${d}</div>`).join('')}</div><div class="cal-days">`;
+  for(let i=0;i<first;i++)h+=`<div class="cal-day empty"></div>`;
+  for(let d=1;d<=dim;d++){
+    const dt=new Date(calY,calM,d);dt.setHours(0,0,0,0);
+    const isPast=dt<today,isFri=dt.getDay()===5,isTod=dt.getTime()===today.getTime();
+    const isSel=selDate&&dt.getTime()===selDate.getTime();
+    let cls='cal-day';
+    if(isPast)cls+=' past';else if(isFri)cls+=' fri';else cls+=' avail';
+    if(isTod)cls+=' today';
+    if(isSel)cls+=' selected';
+    const act=!isPast&&!isFri?`onclick="selDay(new Date(${calY},${calM},${d}))"`:' ';
+    h+=`<div class="${cls}" ${act}>${d}</div>`;
+  }
+  h+=`</div>`;
+  document.getElementById('calWidget').innerHTML=h;
+}
+function chM(d){calM+=d;if(calM>11){calM=0;calY++;}if(calM<0){calM=11;calY--;}renderCal();}
+function selDay(dt){
+  dt.setHours(0,0,0,0);if(dt.getDay()===5)return;
+  selDate=dt;selTime=null;renderCal();
+  const label=dt.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('selectedDateLabel').textContent=label;
+  renderTimes();
+  document.getElementById('timePanel').classList.add('show');
+}
+function renderTimes(){
+  const booked=[10,14,17];let h='';
+  for(let hr=9;hr<20;hr++){
+    const label=`${hr>12?hr-12:hr}:00 ${hr>=12?'PM':'AM'}`;
+    const isBkd=booked.includes(hr);const isSel=selTime===hr;
+    h+=`<div class="time-slot${isBkd?' bkd':isSel?' sel':''}" ${isBkd?'':` onclick="selT(${hr})"`}>${label}</div>`;
+  }
+  document.getElementById('timeGrid').innerHTML=h;
+}
+function selT(hr){
+  selTime=hr;renderTimes();
+  const dl=selDate.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});
+  const tl=`${hr>12?hr-12:hr}:00 ${hr>=12?'PM':'AM'}`;
+  document.getElementById('bSummaryVal').textContent=`${dl} at ${tl} · 1 hour`;
+  document.getElementById('bSummaryBox').classList.add('show');
+  if(!isRegistered){document.getElementById('bRegCta').classList.add('show');document.getElementById('bConfirmForm').classList.remove('show');}
+  else{document.getElementById('bRegCta').classList.remove('show');document.getElementById('bConfirmForm').classList.add('show');}
+}
+function confirmBook(){
+  document.getElementById('bok').classList.add('show');
+  setTimeout(()=>document.getElementById('bok').classList.remove('show'),7000);
+}
+renderCal();
+
+/* ══════════ POPUP REGISTRATION ══════════ */
+let isRegistered=false,currentStep=1;
+function openPopup(){document.getElementById('popupOverlay').classList.add('open');goPopStep(1);}
+function closePopup(){document.getElementById('popupOverlay').classList.remove('open');}
+document.getElementById('popupOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('popupOverlay'))closePopup();});
+
+function goPopStep(n){
+  currentStep=n;
+  ['pStep1','pStep2','pStep3'].forEach((id,i)=>document.getElementById(id).style.display=i+1===n?'block':'none');
+  const steps=document.getElementById('popupSteps').querySelectorAll('.pstep');
+  steps.forEach((s,i)=>s.classList.toggle('done',i<n));
+}
+function goStep(n){goPopStep(n);}
+
+function sendOTP(){
+  const name=document.getElementById('regName').value.trim();
+  const phone=document.getElementById('regPhone').value.trim();
+  if(!name||!phone){alert('Please enter your name and phone number.');return;}
+  document.getElementById('otpSub').textContent=`Code sent to +44 ${phone} via WhatsApp`;
+  goPopStep(2);
+  const inputs=document.querySelectorAll('.otp-box');
+  inputs.forEach((inp,i)=>{inp.value='';
+    inp.addEventListener('input',function(){if(this.value.length===1&&i<inputs.length-1)inputs[i+1].focus();});
+    inp.addEventListener('keydown',function(e){if(e.key==='Backspace'&&!this.value&&i>0)inputs[i-1].focus();});
+  });
+  setTimeout(()=>inputs[0].focus(),100);
+}
+
+function verifyOTP(){
+  const entered=Array.from(document.querySelectorAll('.otp-box')).map(i=>i.value).join('');
+  if(entered.length<6){alert('Please enter all 6 digits.');return;}
+  isRegistered=true;
+  const name=document.getElementById('regName').value.trim();
+  document.getElementById('welcomeName').textContent=name||'friend';
+  goPopStep(3);
+  if(selTime!==null){document.getElementById('bRegCta').classList.remove('show');document.getElementById('bConfirmForm').classList.add('show');}
+}
+
+function resendOTP(){
+  document.querySelectorAll('.otp-box').forEach(i=>i.value='');
+  document.querySelectorAll('.otp-box')[0].focus();
+  alert('A new code has been sent to your WhatsApp.');
+}
+
+function skipToLogin(){
+  isRegistered=true;
+  const name=document.getElementById('regName').value.trim()||'friend';
+  document.getElementById('welcomeName').textContent=name;
+  goPopStep(3);
+}
+</script>
+</body>
+</html>
